@@ -1,7 +1,8 @@
 import * as React from 'react'
+import Button from '../Button'
+
 import { State } from '../../rx/counter'
 import { Callback } from '../../rx/types'
-import Button from '../Button'
 
 type Props = {
   count: State['count'],
