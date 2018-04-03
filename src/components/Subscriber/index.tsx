@@ -1,11 +1,5 @@
 import * as React from 'react'
-// import { Dispatcher } from '../../rx/createStore'
-// todo -- can this be abstracted so that it isn't connected to the `counter` store?
 import { ActionCreator, Dispatcher, Store } from '../../rx/createStore'
-import {
-  // dispatch,
-  State as RxState,
-} from '../../rx/counter'
 
 type State = { [fn: string]: any | Dispatcher }
 type Props = {
@@ -21,8 +15,7 @@ class Subscriber extends React.Component<Props, State> {
     super(props);
 
     this.dispatchers = this.getDispatchers(props);
-
-    this.state = {}
+    this.state = props.store.initialState
   }
 
   dispatchers = {}
@@ -47,15 +40,12 @@ class Subscriber extends React.Component<Props, State> {
 
   componentDidMount() {
     const { store } = this.props
-
-    // todo -- figure out how to not cause a rerender here
     store.state$.subscribe(state => {
       this.setState(state)
     })
   }
 
   render() {
-    console.log('should only render once')
     return this.props.children({...this.state, ...this.dispatchers})
   }
 }
