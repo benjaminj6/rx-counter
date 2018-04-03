@@ -2,16 +2,7 @@ import { Subject } from 'rxjs/Subject'
 import { Observable } from 'rxjs/Observable'
 import { scan } from 'rxjs/operators'
 
-import { createStoreAndDispatch } from './createStore'
-// todo -- separate the generic from the specific
-export type Action = {
-  type: string
-  count?: number
-}
-
-export type ActionCreator = (...args: any[]) => Action
-
-// export const action$ = new Subject()
+import { createStore, Action } from './createStore'
 
 export type State = {
   count: number
@@ -37,7 +28,4 @@ const reducer = (state: State, action: Action) => {
   }
 }
 
-// todo -- create a more abstracted method for generating the store.
-export const { store$, dispatch } = createStoreAndDispatch(reducer, initialState)
-
-
+export const store = createStore(reducer, initialState)

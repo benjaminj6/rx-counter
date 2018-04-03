@@ -2,12 +2,11 @@ import * as React from 'react'
 import Button from '../Button'
 
 import { State } from '../../rx/counter'
-import { Callback } from '../../rx/types'
 
 type Props = {
   count: State['count'],
-  inc: Callback,
-  dec: Callback,
+  inc: () => void,
+  dec: () => void,
 }
 
 const Counter = (props: Props) => (
