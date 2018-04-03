@@ -2,15 +2,16 @@ import { Subject } from 'rxjs/Subject'
 import { Observable } from 'rxjs/Observable'
 import { scan } from 'rxjs/operators'
 
-const INC = 'INC'
-const DEC = 'DEC'
-
-type Action = {
+import { createStoreAndDispatch } from './createStore'
+// todo -- separate the generic from the specific
+export type Action = {
   type: string
   count?: number
 }
 
-type ActionCreator = (...args: any[]) => Action
+export type ActionCreator = (...args: any[]) => Action
+
+// export const action$ = new Subject()
 
 export type State = {
   count: number
@@ -20,7 +21,8 @@ export const initialState: State = {
   count: 0,
 }
 
-export const action$ = new Subject()
+const INC = 'INC'
+const DEC = 'DEC'
 
 const reducer = (state: State, action: Action) => {
   switch (action.type) {
@@ -35,6 +37,7 @@ const reducer = (state: State, action: Action) => {
   }
 }
 
-export const dispatch = (fn: ActionCreator) => (...args: any[]) =>
-  action$.next(fn(...args))
-export const store$ = action$.pipe(scan(reducer, initialState))
+// todo -- create a more abstracted method for generating the store.
+export const { store$, dispatch } = createStoreAndDispatch(reducer, initialState)
+
+
